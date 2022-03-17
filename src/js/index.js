@@ -12,6 +12,7 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
+let correctCards = 0
 function Cards(){
     const [items, setItems] = React.useState([
         {id: 1, img: './src/img/technics.png', stat: "" },
@@ -40,6 +41,7 @@ function Cards(){
             items[prev].stat = "correct"
             setItems([...items])
             setPrev(-1)
+            correctCards++
         }else{
             items[current].stat = "wrong"
             items[prev].stat = "wrong"
@@ -51,13 +53,19 @@ function Cards(){
                 setPrev(-1)
             }, 1000)
         }
+
+        if (correctCards == 8) {
+            alert("Has completado el juego!")
+        }
     }
 
     function handleClick(id){
         if(prev === -1){
-            items[id].stat = "active"
-            setItems([...items])
-            setPrev(id)
+            if (items[id].stat != "correct") {
+                items[id].stat = "active"
+                setItems([...items])
+                setPrev(id)
+            }
         }else{
             check(id)
         }
